@@ -47,11 +47,7 @@
             {%- if deal_product.featured_image -%}
               <a href="{{ deal_product.url }}" tabindex="-1">
                 {%- assign deal_alt = deal_product.featured_image.alt | default: deal_product.title | escape -%}
-                {{ deal_product.featured_image | image_url: width: 800 | image_tag: 
-                  class: 'sellzay-deal__product-image',
-                  alt: deal_alt,
-                  loading: 'lazy'
-                }}
+                {{ deal_product.featured_image | image_url: width: 800 | image_tag: class: 'sellzay-deal__product-image', alt: deal_alt, loading: 'lazy' }}
               </a>
             {%- endif -%}
             

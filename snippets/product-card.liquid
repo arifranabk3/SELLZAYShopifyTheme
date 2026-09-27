@@ -9,11 +9,7 @@
       {%- if product.featured_image -%}
         <a href="{{ product.url }}" class="sellzay-product-card__link" tabindex="-1">
           {%- assign card_alt = product.featured_image.alt | default: product.title | escape -%}
-          {{ product.featured_image | image_url: width: 600 | image_tag: 
-            class: 'sellzay-product-card__image',
-            alt: card_alt,
-            loading: 'lazy'
-          }}
+          {{ product.featured_image | image_url: width: 600 | image_tag: class: 'sellzay-product-card__image', alt: card_alt, loading: 'lazy' }}
         </a>
       {%- else -%}
         <div class="sellzay-product-card__no-image"></div>

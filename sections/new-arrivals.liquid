@@ -15,6 +15,14 @@
             {%- assign fallback_alt = section.settings.featured_image.alt | default: section.settings.heading | escape -%}
             {{ section.settings.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: fallback_alt }}
           </div>
+        {%- else -%}
+          {%- assign fallback_product = target_collection.products.first -%}
+          {%- if fallback_product and fallback_product.featured_image -%}
+            <div class="sellzay-new-arrivals__featured-image">
+              {%- assign fallback_alt = fallback_product.title | escape -%}
+              {{ fallback_product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: fallback_alt }}
+            </div>
+          {%- endif -%}
         {%- endif -%}
         
         <div class="sellzay-new-arrivals__text-block">

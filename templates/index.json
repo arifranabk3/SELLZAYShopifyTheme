@@ -1,4 +1,4 @@
-{
+﻿{
   "sections": {
     "announcement": {
       "type": "announcement-bar",
@@ -14,7 +14,28 @@
     },
     "hero": {
       "type": "hero-slider",
-      "settings": {}
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "SMART FINDS • EVERYDAY ESSENTIALS",
+            "heading": "Shop Smarter.",
+            "highlighted_heading": "Live Better.",
+            "description": "Discover useful, trending products selected for everyday life.",
+            "primary_button_label": "Shop Now →",
+            "secondary_button_label": "Explore Products"
+          }
+        }
+      },
+      "block_order": [
+        "slide-1"
+      ],
+      "settings": {
+        "autoplay": true,
+        "show_arrows": true,
+        "show_indicators": true,
+        "show_trust": true
+      }
     },
     "category-circles": {
       "type": "category-circles",
@@ -22,19 +43,98 @@
     },
     "promo-banners": {
       "type": "promo-banners",
+      "blocks": {
+        "promo-1": {
+          "type": "promo",
+          "settings": {
+            "enable": true,
+            "heading": "Smart Tech Finds",
+            "description": "Everyday gadgets worth discovering"
+          }
+        },
+        "promo-2": {
+          "type": "promo",
+          "settings": {
+            "enable": true,
+            "heading": "Beauty Essentials",
+            "description": "Simple picks for your routine"
+          }
+        },
+        "promo-3": {
+          "type": "promo",
+          "settings": {
+            "enable": true,
+            "heading": "Home & Kitchen",
+            "description": "Practical products for everyday living"
+          }
+        }
+      },
+      "block_order": [
+        "promo-1",
+        "promo-2",
+        "promo-3"
+      ],
       "settings": {}
     },
     "benefits-strip": {
       "type": "benefits-strip",
+      "blocks": {
+        "benefit-1": {
+          "type": "benefit",
+          "settings": {
+            "enable": true,
+            "icon": "secure",
+            "heading": "Secure Payments",
+            "description": "Shop with confidence"
+          }
+        },
+        "benefit-2": {
+          "type": "benefit",
+          "settings": {
+            "enable": true,
+            "icon": "shipping",
+            "heading": "Fast Shipping",
+            "description": "Delivery options at checkout"
+          }
+        },
+        "benefit-3": {
+          "type": "benefit",
+          "settings": {
+            "enable": true,
+            "icon": "returns",
+            "heading": "Easy Returns",
+            "description": "Simple return process"
+          }
+        },
+        "benefit-4": {
+          "type": "benefit",
+          "settings": {
+            "enable": true,
+            "icon": "support",
+            "heading": "Dedicated Support",
+            "description": "We're here to help"
+          }
+        }
+      },
+      "block_order": [
+        "benefit-1",
+        "benefit-2",
+        "benefit-3",
+        "benefit-4"
+      ],
       "settings": {}
     },
     "featured-products": {
       "type": "featured-products",
-      "settings": {}
+      "settings": {
+        "product_count": 5
+      }
     },
     "deal-of-day": {
       "type": "deal-of-day",
-      "settings": {}
+      "settings": {
+        "show_countdown": true
+      }
     },
     "new-arrivals": {
       "type": "new-arrivals",
@@ -42,6 +142,8 @@
     },
     "testimonials": {
       "type": "testimonials",
+      "blocks": {},
+      "block_order": [],
       "settings": {}
     },
     "newsletter": {

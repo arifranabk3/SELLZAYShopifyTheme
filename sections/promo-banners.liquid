@@ -16,7 +16,14 @@
                 {{ block.settings.image | image_url: width: 800 | image_tag: class: 'sellzay-promos__image', loading: 'lazy', alt: promo_alt }}
                 <div class="sellzay-promos__overlay" aria-hidden="true"></div>
               {%- else -%}
-                <div class="sellzay-promos__fallback-bg"></div>
+                {%- assign fallback_product = collections.all.products[forloop.index0] | default: collections.all.products.first -%}
+                {%- if fallback_product and fallback_product.featured_image -%}
+                  {%- assign promo_alt = fallback_product.title | escape -%}
+                  {{ fallback_product.featured_image | image_url: width: 800 | image_tag: class: 'sellzay-promos__image', loading: 'lazy', alt: promo_alt }}
+                  <div class="sellzay-promos__overlay" aria-hidden="true"></div>
+                {%- else -%}
+                  <div class="sellzay-promos__fallback-bg"></div>
+                {%- endif -%}
               {%- endif -%}
             </div>
             

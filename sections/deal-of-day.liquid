@@ -1,6 +1,10 @@
 {%- assign deal_product = section.settings.product -%}
 
 {%- if deal_product == blank -%}
+  {%- assign deal_product = collections.all.products.first -%}
+{%- endif -%}
+
+{%- if deal_product == blank -%}
   {%- if request.design_mode -%}
     <div class="sellzay-deal sellzay-deal--empty container">
       <div class="sellzay-deal__placeholder">

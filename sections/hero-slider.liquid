@@ -1,0 +1,225 @@
+<div class="sellzay-hero"
+     data-sellzay-hero
+     data-autoplay="{{ section.settings.autoplay }}"
+     data-autoplay-interval="{{ section.settings.autoplay_interval | times: 1000 }}"
+     style="--hero-height: {{ section.settings.section_height }}px;">
+  
+  <div class="sellzay-hero__inner container">
+    <div class="sellzay-hero__slides">
+      {%- for block in section.blocks -%}
+        <div class="sellzay-hero__slide{% if forloop.first %} is-active{% endif %}"
+             data-sellzay-hero-slide
+             {{ block.shopify_attributes }}>
+          
+          <div class="sellzay-hero__content">
+            {%- if block.settings.eyebrow != blank -%}
+              <div class="sellzay-hero__eyebrow">{{ block.settings.eyebrow }}</div>
+            {%- endif -%}
+            
+            {%- if block.settings.heading != blank -%}
+              <h1 class="sellzay-hero__heading">
+                {{ block.settings.heading }}
+                {%- if block.settings.highlighted_heading != blank -%}
+                  <span class="sellzay-hero__highlight">{{ block.settings.highlighted_heading }}</span>
+                {%- endif -%}
+              </h1>
+            {%- endif -%}
+            
+            {%- if block.settings.description != blank -%}
+              <p class="sellzay-hero__description">{{ block.settings.description }}</p>
+            {%- endif -%}
+            
+            <div class="sellzay-hero__actions">
+              {%- if block.settings.primary_button_label != blank -%}
+                <a href="{{ block.settings.primary_button_link | default: '#' }}" class="sellzay-hero__btn sellzay-hero__btn--primary">
+                  {{ block.settings.primary_button_label }}
+                </a>
+              {%- endif -%}
+              {%- if block.settings.secondary_button_label != blank -%}
+                <a href="{{ block.settings.secondary_button_link | default: '#' }}" class="sellzay-hero__btn sellzay-hero__btn--secondary">
+                  {{ block.settings.secondary_button_label }}
+                </a>
+              {%- endif -%}
+            </div>
+            
+            {%- if section.settings.show_trust -%}
+              <div class="sellzay-hero__trust">
+                <div class="sellzay-hero__trust-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                  <span>Free Shipping</span>
+                </div>
+                <div class="sellzay-hero__trust-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  <span>Easy Returns</span>
+                </div>
+                <div class="sellzay-hero__trust-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  <span>Secure Payments</span>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+          
+          <div class="sellzay-hero__media">
+            {%- if block.settings.image != blank -%}
+              {%- assign hero_alt = block.settings.image.alt | default: 'SellZay Hero Image' | escape -%}
+              {{ block.settings.image | image_url: width: 1200 | image_tag: 
+                 class: 'sellzay-hero__image', 
+                 loading: 'lazy', 
+                 alt: hero_alt }}
+            {%- else -%}
+              <div class="sellzay-hero__image-fallback"></div>
+            {%- endif -%}
+          </div>
+          
+        </div>
+      {%- endfor -%}
+    </div>
+    
+    {%- if section.blocks.size > 1 -%}
+      {%- if section.settings.show_arrows -%}
+        <div class="sellzay-hero__controls">
+          <button class="sellzay-hero__arrow sellzay-hero__arrow--prev" data-sellzay-hero-prev aria-label="Previous slide">
+            &larr;
+          </button>
+          <button class="sellzay-hero__arrow sellzay-hero__arrow--next" data-sellzay-hero-next aria-label="Next slide">
+            &rarr;
+          </button>
+        </div>
+      {%- endif -%}
+      
+      {%- if section.settings.show_indicators -%}
+        <div class="sellzay-hero__dots">
+          {%- for block in section.blocks -%}
+            <button class="sellzay-hero__dot{% if forloop.first %} is-active{% endif %}" 
+                    data-sellzay-hero-dot="{{ forloop.index0 }}" 
+                    aria-label="Go to slide {{ forloop.index }}"
+                    {% if forloop.first %}aria-current="true"{% endif %}></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero Slider",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Section height",
+      "min": 400,
+      "max": 800,
+      "step": 10,
+      "default": 600,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_interval",
+      "label": "Autoplay interval",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "unit": "s"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_indicators",
+      "label": "Show indicators",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust",
+      "label": "Show trust indicators",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "LIMITED TIME OFFER"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Shop Smarter."
+        },
+        {
+          "type": "text",
+          "id": "highlighted_heading",
+          "label": "Highlighted heading",
+          "default": "Live Better."
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Top products. Great prices. A smarter way to shop."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "primary_button_label",
+          "label": "Primary button label",
+          "default": "Shop Now →"
+        },
+        {
+          "type": "url",
+          "id": "primary_button_link",
+          "label": "Primary button link"
+        },
+        {
+          "type": "text",
+          "id": "secondary_button_label",
+          "label": "Secondary button label",
+          "default": "Watch Video ▶"
+        },
+        {
+          "type": "url",
+          "id": "secondary_button_link",
+          "label": "Secondary button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slider",
+      "blocks": [
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

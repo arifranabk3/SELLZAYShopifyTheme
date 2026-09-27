@@ -1,0 +1,131 @@
+<nav class="sellzay-navigation" role="navigation">
+  <div class="container">
+    <div class="sellzay-navigation__inner">
+      
+      <!-- ALL CATEGORIES -->
+      <div class="sellzay-navigation__categories">
+        {%- if section.settings.show_all_categories -%}
+          <button class="sellzay-navigation__categories-toggle" 
+                  data-sellzay-categories-toggle 
+                  aria-expanded="false" 
+                  aria-controls="sellzay-categories-dropdown">
+            <span class="sellzay-navigation__categories-icon-menu">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20">
+                <path fill="currentColor" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+              </svg>
+            </span>
+            <span class="sellzay-navigation__categories-text">All Categories</span>
+            <span class="sellzay-navigation__categories-icon-arrow">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="16" height="16">
+                <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"></path>
+              </svg>
+            </span>
+          </button>
+          
+          <div id="sellzay-categories-dropdown" class="sellzay-navigation__dropdown" data-sellzay-categories-menu>
+            <ul class="sellzay-navigation__dropdown-list">
+              {%- assign categories_menu = section.settings.categories_menu -%}
+              {%- if categories_menu != blank and linklists[categories_menu].links.size > 0 -%}
+                {%- for link in linklists[categories_menu].links -%}
+                  <li class="sellzay-navigation__dropdown-item">
+                    <a href="{{ link.url }}" class="sellzay-navigation__dropdown-link">
+                      {{ link.title | escape }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              {%- else -%}
+                <!-- Fallback to collections if no menu selected -->
+                {%- for collection in collections limit: 8 -%}
+                  <li class="sellzay-navigation__dropdown-item">
+                    <a href="{{ collection.url }}" class="sellzay-navigation__dropdown-link">
+                      {{ collection.title | escape }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- MAIN MENU -->
+      <ul class="sellzay-navigation__menu">
+        {%- assign main_menu = section.settings.main_menu -%}
+        {%- if main_menu != blank and linklists[main_menu].links.size > 0 -%}
+          {%- for link in linklists[main_menu].links -%}
+            <li class="sellzay-navigation__menu-item">
+              <a href="{{ link.url }}" class="sellzay-navigation__link {% if link.active %}sellzay-navigation__link--active{% endif %}">
+                {{ link.title | escape }}
+                {%- if section.settings.show_deals_icon and link.title downcase contains 'deals' -%}
+                  <span class="sellzay-navigation__deals-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14">
+                      <path fill="#F4511E" d="M11.71 1.74a.495.495 0 0 0-.58.11c-.34.37-2.79 3.12-4.13 6.13-1.63 3.65-1.12 7.74.83 10.38 1.15 1.55 2.82 2.37 4.67 2.37 3.51 0 6.04-2.8 6.04-6.32 0-2.61-1.35-4.83-2.31-6.42a40.066 40.066 0 0 0-2.81-4.14c-.39-.49-1-.41-1.19.16-.62 1.83-.87 4.3.43 6.08.17.23-.05.54-.3.45-1.57-.6-2.58-2.64-2.22-4.75.14-.85.5-2.07 1.57-4.05z"></path>
+                    </svg>
+                  </span>
+                {%- endif -%}
+              </a>
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Fallback -->
+          <li class="sellzay-navigation__menu-item"><a href="{{ routes.root_url }}" class="sellzay-navigation__link sellzay-navigation__link--active">Home</a></li>
+          <li class="sellzay-navigation__menu-item"><a href="{{ routes.collections_url }}" class="sellzay-navigation__link">Trending</a></li>
+          <li class="sellzay-navigation__menu-item"><a href="{{ routes.all_products_collection_url }}" class="sellzay-navigation__link">Best Sellers</a></li>
+          <li class="sellzay-navigation__menu-item"><a href="{{ routes.collections_url }}" class="sellzay-navigation__link">New Arrivals</a></li>
+          <li class="sellzay-navigation__menu-item">
+            <a href="{{ routes.collections_url }}" class="sellzay-navigation__link">
+              Deals
+              <span class="sellzay-navigation__deals-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="14" height="14">
+                  <path fill="#F4511E" d="M11.71 1.74a.495.495 0 0 0-.58.11c-.34.37-2.79 3.12-4.13 6.13-1.63 3.65-1.12 7.74.83 10.38 1.15 1.55 2.82 2.37 4.67 2.37 3.51 0 6.04-2.8 6.04-6.32 0-2.61-1.35-4.83-2.31-6.42a40.066 40.066 0 0 0-2.81-4.14c-.39-.49-1-.41-1.19.16-.62 1.83-.87 4.3.43 6.08.17.23-.05.54-.3.45-1.57-.6-2.58-2.64-2.22-4.75.14-.85.5-2.07 1.57-4.05z"></path>
+                </svg>
+              </span>
+            </a>
+          </li>
+          <li class="sellzay-navigation__menu-item"><a href="#" class="sellzay-navigation__link">Electronics</a></li>
+          <li class="sellzay-navigation__menu-item"><a href="#" class="sellzay-navigation__link">Beauty</a></li>
+          <li class="sellzay-navigation__menu-item"><a href="#" class="sellzay-navigation__link">Home & Kitchen</a></li>
+          <li class="sellzay-navigation__menu-item"><a href="#" class="sellzay-navigation__link">Lifestyle</a></li>
+          <li class="sellzay-navigation__menu-item"><a href="#" class="sellzay-navigation__link">Fitness</a></li>
+          <li class="sellzay-navigation__menu-item"><a href="#" class="sellzay-navigation__link">Pet Supplies</a></li>
+        {%- endif -%}
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "Navigation",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_all_categories",
+      "label": "Show All Categories button",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "categories_menu",
+      "label": "All Categories menu"
+    },
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Main menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_deals_icon",
+      "label": "Show Deals icon",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navigation"
+    }
+  ]
+}
+{% endschema %}

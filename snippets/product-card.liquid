@@ -1,0 +1,69 @@
+{%- comment -%}
+  Accepts:
+  - product: {Object} Product Liquid object
+{%- endcomment -%}
+
+{%- if product and product != empty -%}
+  <div class="sellzay-product-card">
+    <div class="sellzay-product-card__media">
+      {%- if product.featured_image -%}
+        <a href="{{ product.url }}" class="sellzay-product-card__link" tabindex="-1">
+          {%- assign card_alt = product.featured_image.alt | default: product.title | escape -%}
+          {{ product.featured_image | image_url: width: 600 | image_tag: 
+            class: 'sellzay-product-card__image',
+            alt: card_alt,
+            loading: 'lazy'
+          }}
+        </a>
+      {%- else -%}
+        <div class="sellzay-product-card__no-image"></div>
+      {%- endif -%}
+
+      {%- if product.compare_at_price > product.price -%}
+        <div class="sellzay-product-card__badge">
+          {%- assign savings = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+          -{{ savings }}%
+        </div>
+      {%- endif -%}
+
+      <button class="sellzay-product-card__wishlist" type="button" aria-label="Add {{ product.title | escape }} to wishlist" data-sellzay-wishlist data-product-id="{{ product.id }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      </button>
+    </div>
+
+    <div class="sellzay-product-card__content">
+      <a href="{{ product.url }}" class="sellzay-product-card__title">{{ product.title }}</a>
+
+      {%- if product.metafields.reviews.rating.value != blank -%}
+        <div class="sellzay-product-card__rating">
+          <span class="sellzay-product-card__rating-star" aria-hidden="true">★</span>
+          <span class="sellzay-product-card__rating-value">{{ product.metafields.reviews.rating.value.rating | round: 1 }}</span>
+          {%- if product.metafields.reviews.rating_count -%}
+            <span class="sellzay-product-card__rating-count">({{ product.metafields.reviews.rating_count }})</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="sellzay-product-card__price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="sellzay-product-card__price-current">{{ product.price | money }}</span>
+          <s class="sellzay-product-card__compare">{{ product.compare_at_price | money }}</s>
+        {%- else -%}
+          <span class="sellzay-product-card__price-current">{{ product.price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      <div class="sellzay-product-card__actions">
+        {%- assign variant = product.selected_or_first_available_variant -%}
+        {%- form 'product', product -%}
+          <input type="hidden" name="id" value="{{ variant.id }}">
+          {%- if variant.available -%}
+            <button type="submit" class="sellzay-product-card__btn sellzay-btn--primary">Add to Cart</button>
+          {%- else -%}
+            <button type="button" class="sellzay-product-card__btn sellzay-btn--disabled" disabled>Sold Out</button>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

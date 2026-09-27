@@ -1,0 +1,74 @@
+{%- assign target_collection = section.settings.collection -%}
+{%- if target_collection == blank or target_collection.products_count == 0 -%}
+  {%- assign target_collection = collections['best-sellers'] -%}
+{%- endif -%}
+{%- if target_collection == blank or target_collection.products_count == 0 -%}
+  {%- assign target_collection = collections['all'] -%}
+{%- endif -%}
+
+{%- if target_collection and target_collection.products_count > 0 -%}
+  <div class="sellzay-featured">
+    <div class="sellzay-featured__inner container">
+      <div class="sellzay-featured__header">
+        <div class="sellzay-featured__header-text">
+          <h2 class="sellzay-featured__heading">{{ section.settings.heading }}</h2>
+          <p class="sellzay-featured__description">{{ section.settings.description }}</p>
+        </div>
+        {%- if section.settings.show_view_all -%}
+          <a href="{{ target_collection.url }}" class="sellzay-featured__view-all">View All &rarr;</a>
+        {%- endif -%}
+      </div>
+
+      <div class="sellzay-featured__grid" style="--desktop-cols: 5;">
+        {%- for product in target_collection.products limit: section.settings.product_count -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Trending Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trending Products"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Most popular products right now"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "product_count",
+      "min": 4,
+      "max": 10,
+      "step": 1,
+      "label": "Products to display",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' link",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trending Products"
+    }
+  ]
+}
+{% endschema %}

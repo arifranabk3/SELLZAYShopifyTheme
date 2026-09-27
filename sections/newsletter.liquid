@@ -1,0 +1,119 @@
+<div class="sellzay-newsletter" {% if section.settings.bg_image != blank %}style="background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}'); background-size: cover; background-position: center; position: relative;"{% endif %}>
+  {%- if section.settings.bg_image != blank -%}
+    <div class="sellzay-newsletter__overlay"></div>
+  {%- endif -%}
+  <div class="sellzay-newsletter__inner container">
+    <div class="sellzay-newsletter__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="sellzay-newsletter__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sellzay-newsletter__title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <p class="sellzay-newsletter__description">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+    
+    <div class="sellzay-newsletter__form-wrapper">
+      {%- form 'customer', class: 'sellzay-newsletter__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        
+        <div class="sellzay-newsletter__field-group">
+          <label for="NewsletterEmail-{{ section.id }}" class="visually-hidden">Email</label>
+          <input
+            id="NewsletterEmail-{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            class="sellzay-newsletter__input"
+            value="{{ form.email }}"
+            aria-required="true"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            {% if form.errors %}
+              autofocus
+              aria-invalid="true"
+              aria-describedby="Newsletter-error-{{ section.id }}"
+            {% elsif form.posted_successfully? %}
+              aria-describedby="Newsletter-success-{{ section.id }}"
+            {% endif %}
+            placeholder="{{ section.settings.email_placeholder }}"
+            required
+          >
+          <button type="submit" class="sellzay-btn sellzay-btn--primary sellzay-newsletter__button" name="commit">
+            {{ section.settings.button_text }}
+          </button>
+        </div>
+
+        {%- if form.errors -%}
+          <div class="sellzay-newsletter__message sellzay-newsletter__error" id="Newsletter-error-{{ section.id }}">
+            {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+          </div>
+        {%- endif -%}
+
+        {%- if form.posted_successfully? -%}
+          <div class="sellzay-newsletter__message sellzay-newsletter__success" id="Newsletter-success-{{ section.id }}">
+            {{ section.settings.success_message }}
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "STAY IN THE LOOP"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get the Latest from SellZay"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Be the first to discover new arrivals, special offers, and what's trending."
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Enter your email address"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for subscribing!"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (optional)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

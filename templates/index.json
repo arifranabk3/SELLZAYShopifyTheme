@@ -1,0 +1,71 @@
+{
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "settings": {}
+    },
+    "navigation": {
+      "type": "navigation",
+      "settings": {}
+    },
+    "hero": {
+      "type": "hero-slider",
+      "settings": {}
+    },
+    "category-circles": {
+      "type": "category-circles",
+      "settings": {}
+    },
+    "promo-banners": {
+      "type": "promo-banners",
+      "settings": {}
+    },
+    "benefits-strip": {
+      "type": "benefits-strip",
+      "settings": {}
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {}
+    },
+    "deal-of-day": {
+      "type": "deal-of-day",
+      "settings": {}
+    },
+    "new-arrivals": {
+      "type": "new-arrivals",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "announcement",
+    "header",
+    "navigation",
+    "hero",
+    "category-circles",
+    "promo-banners",
+    "benefits-strip",
+    "featured-products",
+    "deal-of-day",
+    "new-arrivals",
+    "testimonials",
+    "newsletter",
+    "footer"
+  ]
+}

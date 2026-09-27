@@ -1,0 +1,159 @@
+{%- assign deal_product = section.settings.product -%}
+
+{%- if deal_product == blank -%}
+  {%- if request.design_mode -%}
+    <div class="sellzay-deal sellzay-deal--empty container">
+      <div class="sellzay-deal__placeholder">
+        <p>Please select a product for the Deal of the Day section.</p>
+      </div>
+    </div>
+  {%- endif -%}
+{%- else -%}
+  <div class="sellzay-deal" {% if section.settings.bg_image != blank %}style="background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}');"{% endif %}>
+    <div class="sellzay-deal__inner container">
+      <div class="sellzay-deal__content">
+        <h2 class="sellzay-deal__heading">{{ section.settings.heading }}</h2>
+        <p class="sellzay-deal__description">{{ section.settings.description }}</p>
+
+        {%- if section.settings.show_countdown and section.settings.end_date != blank -%}
+          <div class="sellzay-deal__countdown" data-sellzay-deal-countdown data-sellzay-deal-end="{{ section.settings.end_date | escape }}">
+            <div class="sellzay-deal__countdown-item">
+              <span class="sellzay-deal__countdown-number" data-hours>00</span>
+              <span class="sellzay-deal__countdown-label">HOURS</span>
+            </div>
+            <div class="sellzay-deal__countdown-separator" aria-hidden="true">:</div>
+            <div class="sellzay-deal__countdown-item">
+              <span class="sellzay-deal__countdown-number" data-minutes>00</span>
+              <span class="sellzay-deal__countdown-label">MIN</span>
+            </div>
+            <div class="sellzay-deal__countdown-separator" aria-hidden="true">:</div>
+            <div class="sellzay-deal__countdown-item">
+              <span class="sellzay-deal__countdown-number" data-seconds>00</span>
+              <span class="sellzay-deal__countdown-label">SEC</span>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div class="sellzay-deal__actions">
+          <a href="{{ section.settings.button_url | default: deal_product.url }}" class="sellzay-btn sellzay-btn--primary">
+            {{ section.settings.button_label }} &rarr;
+          </a>
+        </div>
+      </div>
+
+      <div class="sellzay-deal__product">
+        <div class="sellzay-deal__product-card">
+          <div class="sellzay-deal__product-media">
+            {%- if deal_product.featured_image -%}
+              <a href="{{ deal_product.url }}" tabindex="-1">
+                {%- assign deal_alt = deal_product.featured_image.alt | default: deal_product.title | escape -%}
+                {{ deal_product.featured_image | image_url: width: 800 | image_tag: 
+                  class: 'sellzay-deal__product-image',
+                  alt: deal_alt,
+                  loading: 'lazy'
+                }}
+              </a>
+            {%- endif -%}
+            
+            {%- if deal_product.compare_at_price > deal_product.price -%}
+              <div class="sellzay-deal__badge">
+                {%- assign savings = deal_product.compare_at_price | minus: deal_product.price | times: 100.0 | divided_by: deal_product.compare_at_price | round -%}
+                -{{ savings }}%
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="sellzay-deal__product-info">
+            <a href="{{ deal_product.url }}" class="sellzay-deal__product-title">{{ deal_product.title }}</a>
+            
+            <div class="sellzay-deal__price">
+              <span class="sellzay-deal__price-current">{{ deal_product.price | money }}</span>
+              {%- if deal_product.compare_at_price > deal_product.price -%}
+                <s class="sellzay-deal__compare">{{ deal_product.compare_at_price | money }}</s>
+              {%- endif -%}
+            </div>
+
+            {%- if section.settings.show_add_to_cart -%}
+              <div class="sellzay-deal__product-actions">
+                {%- assign variant = deal_product.selected_or_first_available_variant -%}
+                {%- form 'product', deal_product -%}
+                  <input type="hidden" name="id" value="{{ variant.id }}">
+                  {%- if variant.available -%}
+                    <button type="submit" class="sellzay-btn sellzay-btn--secondary" style="width: 100%;">Add to Cart</button>
+                  {%- else -%}
+                    <button type="button" class="sellzay-btn sellzay-btn--disabled" style="width: 100%;" disabled>Sold Out</button>
+                  {%- endif -%}
+                {%- endform -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Deal of the Day",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Deal of the Day"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Grab the best deals before they're gone!"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Deal Product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_countdown",
+      "label": "Show Countdown",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "End Date & Time",
+      "info": "Format: YYYY-MM-DDTHH:MM:SS (e.g. 2026-12-31T23:59:59)"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Deals"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL",
+      "info": "Defaults to product URL if left empty"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_to_cart",
+      "label": "Show Add to Cart",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Deal of the Day"
+    }
+  ]
+}
+{% endschema %}

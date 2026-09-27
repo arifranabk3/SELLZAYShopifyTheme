@@ -1,0 +1,111 @@
+{%- if section.settings.show_announcement -%}
+  <div class="sellzay-announcement" role="region" aria-label="Announcement">
+    <div class="container">
+      <div class="sellzay-announcement__inner">
+        
+        <div class="sellzay-announcement__left">
+          <span class="sellzay-announcement__item">
+            {{ section.settings.country_label | escape }}
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret" viewBox="0 0 10 6" width="10" height="6">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+            </svg>
+          </span>
+        </div>
+
+        <div class="sellzay-announcement__center">
+          {%- if section.settings.shipping_message != blank -%}
+            <span class="sellzay-announcement__item">{{ section.settings.shipping_message | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.returns_message != blank -%}
+            <span class="sellzay-announcement__separator" aria-hidden="true">|</span>
+            <span class="sellzay-announcement__item">{{ section.settings.returns_message | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.support_message != blank -%}
+            <span class="sellzay-announcement__separator" aria-hidden="true">|</span>
+            <span class="sellzay-announcement__item">{{ section.settings.support_message | escape }}</span>
+          {%- endif -%}
+        </div>
+
+        <div class="sellzay-announcement__right">
+          {%- if section.settings.track_order_label != blank -%}
+            <a href="{{ section.settings.track_order_url }}" class="sellzay-announcement__link">
+              {{ section.settings.track_order_label | escape }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.help_label != blank -%}
+            <span class="sellzay-announcement__separator" aria-hidden="true">|</span>
+            <a href="{{ section.settings.help_url }}" class="sellzay-announcement__link">
+              {{ section.settings.help_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SellZay Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Enable announcement bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "country_label",
+      "label": "USA label",
+      "default": "🇺🇸 USA"
+    },
+    {
+      "type": "text",
+      "id": "shipping_message",
+      "label": "Shipping message",
+      "default": "Free Shipping on Orders $50+"
+    },
+    {
+      "type": "text",
+      "id": "returns_message",
+      "label": "Returns message",
+      "default": "30-Day Easy Returns"
+    },
+    {
+      "type": "text",
+      "id": "support_message",
+      "label": "Support message",
+      "default": "24/7 Customer Support"
+    },
+    {
+      "type": "text",
+      "id": "track_order_label",
+      "label": "Track Order label",
+      "default": "Track Order"
+    },
+    {
+      "type": "url",
+      "id": "track_order_url",
+      "label": "Track Order URL"
+    },
+    {
+      "type": "text",
+      "id": "help_label",
+      "label": "Help label",
+      "default": "Help"
+    },
+    {
+      "type": "url",
+      "id": "help_url",
+      "label": "Help URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SellZay Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

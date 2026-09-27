@@ -1,7 +1,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('SellZay theme initialized.');
+  console.log('SellZeo theme initialized.');
 
   // Categories Dropdown functionality
   const categoriesToggle = document.querySelector('[data-sellzay-categories-toggle]');

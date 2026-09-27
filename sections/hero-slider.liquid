@@ -62,7 +62,7 @@
           
           <div class="sellzay-hero__media">
             {%- if block.settings.image != blank -%}
-              {%- assign hero_alt = block.settings.image.alt | default: 'SellZay Hero Image' | escape -%}
+              {%- assign hero_alt = block.settings.image.alt | default: 'SellZeo Hero Image' | escape -%}
               {{ block.settings.image | image_url: width: 1200 | image_tag: class: 'sellzay-hero__image', loading: 'lazy', alt: hero_alt }}
             {%- else -%}
               <div class="sellzay-hero__image-fallback"></div>

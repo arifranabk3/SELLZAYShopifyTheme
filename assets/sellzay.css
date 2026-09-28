@@ -669,14 +669,30 @@ button {
 .sellzay-hero__trust-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 500;
+  gap: 12px;
   color: rgba(255, 255, 255, 0.9);
 }
 
 .sellzay-hero__trust-item svg {
   color: var(--sellzay-orange);
+  flex-shrink: 0;
+}
+
+.sellzay-hero__trust-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sellzay-hero__trust-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.sellzay-hero__trust-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.2;
 }
 
 .sellzay-hero__media {
@@ -692,7 +708,8 @@ button {
   width: 100%;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+  border-radius: 12px;
 }
 
 .sellzay-hero__image-fallback {
